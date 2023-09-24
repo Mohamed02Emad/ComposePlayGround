@@ -21,7 +21,7 @@ import com.mo.composeplayground.utils.shadow
 
 @Composable
 fun ShadowButton(
-    shadowColor: Color = Color.Cyan,
+    shadowColor: Color = Color.Gray,
     background: Color = Color.Blue,
     radius: Int = 15,
     onClick: () -> Unit,

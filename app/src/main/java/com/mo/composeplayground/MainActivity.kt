@@ -6,12 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.mo.composeplayground.components.ShadowButton
-import com.mo.composeplayground.presentation.MainScreen
+import com.mo.composeplayground.presentation.CounterScreen
 import com.mo.composeplayground.ui.theme.ComposePlayGroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    CounterScreen()
                 }
             }
         }
@@ -41,6 +39,6 @@ fun GreetingPreview() {
 //        ) {
 //            Greeting("Android")
 //        }
-        MainScreen()
+        CounterScreen()
     }
 }

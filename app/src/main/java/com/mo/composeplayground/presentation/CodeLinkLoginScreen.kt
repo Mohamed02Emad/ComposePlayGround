@@ -44,8 +44,10 @@ import com.mo.composeplayground.R
 import com.mo.composeplayground.components.ShadowButton
 import com.mo.composeplayground.ui.theme.ColorPrimary
 
+
+
 @Composable
-fun MainScreen() {
+fun LoginScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,6 +67,8 @@ fun MainScreen() {
         SignUpText()
     }
 }
+
+
 
 @Composable
 fun SignUpText() {
@@ -159,7 +163,7 @@ fun WelcomeText() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditText(icon: ImageVector , hint: String = "") {
+fun EditText(icon: ImageVector, hint: String = "") {
     val shape = RoundedCornerShape(20.dp)
 
     BasicTextField(
@@ -180,7 +184,7 @@ fun EditText(icon: ImageVector , hint: String = "") {
         interactionSource = MutableInteractionSource(),
         singleLine = true,
 
-    ) { innerTextField ->
+        ) { innerTextField ->
         TextFieldDefaults.TextFieldDecorationBox(
             value = "",
             visualTransformation = VisualTransformation.None,
@@ -210,7 +214,7 @@ fun EditText(icon: ImageVector , hint: String = "") {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OutLinedEditText(icon: ImageVector , hint: String = "") {
+fun OutLinedEditText(icon: ImageVector, hint: String = "") {
     val shape = RoundedCornerShape(20.dp)
 
     OutlinedTextField(
@@ -222,14 +226,14 @@ fun OutLinedEditText(icon: ImageVector , hint: String = "") {
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(55.dp)
-          //  .clip(shape)
+            //  .clip(shape)
             .shadow(
                 elevation = 2.dp,
                 shape = shape
             )
 //            .padding(all = 2.dp)
 //            .clip(shape)
-            ,
+        ,
         leadingIcon = {
             Icon(
                 icon,
@@ -261,8 +265,10 @@ fun ForgetPasswordText() {
     )
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    MainScreen()
+    LoginScreen()
 }

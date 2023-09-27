@@ -9,7 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.mo.composeplayground.presentation.CounterScreen
+import com.mo.composeplayground.presentation.codeLinkLoginScreen.LoginScreen
+import com.mo.composeplayground.presentation.counter.CounterScreen
 import com.mo.composeplayground.ui.theme.ComposePlayGroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,12 +18,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePlayGroundTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CounterScreen()
+                   // CounterScreen()
+                    LoginScreen()
                 }
             }
         }

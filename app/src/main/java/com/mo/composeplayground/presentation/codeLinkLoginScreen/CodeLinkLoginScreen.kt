@@ -1,4 +1,4 @@
-package com.mo.composeplayground.presentation
+package com.mo.composeplayground.presentation.codeLinkLoginScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,10 +22,16 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mo.composeplayground.R
 import com.mo.composeplayground.components.ShadowButton
+import com.mo.composeplayground.ui.theme.ColorHint
 import com.mo.composeplayground.ui.theme.ColorPrimary
 
 
@@ -68,8 +75,6 @@ fun LoginScreen() {
     }
 }
 
-
-
 @Composable
 fun SignUpText() {
     Row(
@@ -79,11 +84,12 @@ fun SignUpText() {
     ) {
         Text(
             text = "Don’t have an account?",
+            color = Color.Black,
             fontSize = 12.sp
         )
         Text(
             text = "Sign Up",
-            fontSize = 13.sp,
+            fontSize = 14.sp,
             color = ColorPrimary,
             modifier = Modifier.padding(start = 4.dp)
         )
@@ -103,13 +109,13 @@ fun LoginButton() {
         ) {
             Text(
                 text = "Log in",
-                fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                fontSize = 16.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp)
             )
         }
     }
 }
-
 
 @Composable
 fun BigImage(image: Painter) {
@@ -154,12 +160,12 @@ fun WelcomeText() {
     Text(
         text = "Welcome Back!",
         fontSize = 18.sp,
+        color = Color.Black,
         modifier = Modifier
             .padding(top = 10.dp)
             .padding(horizontal = 16.dp)
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -215,12 +221,17 @@ fun EditText(icon: ImageVector, hint: String = "") {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutLinedEditText(icon: ImageVector, hint: String = "") {
-    val shape = RoundedCornerShape(20.dp)
+
+    val shape = RoundedCornerShape(12.dp)
+
+    var txt by remember {
+        mutableStateOf(TextFieldValue())
+    }
 
     OutlinedTextField(
-        value = TextFieldValue(""),
+        value = txt,
         onValueChange = {textFieldValue ->
-
+          txt = textFieldValue
         },
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -230,10 +241,7 @@ fun OutLinedEditText(icon: ImageVector, hint: String = "") {
             .shadow(
                 elevation = 2.dp,
                 shape = shape
-            )
-//            .padding(all = 2.dp)
-//            .clip(shape)
-        ,
+            ),
         leadingIcon = {
             Icon(
                 icon,
@@ -241,11 +249,12 @@ fun OutLinedEditText(icon: ImageVector, hint: String = "") {
             )
         },
         shape = shape,
-        placeholder = { Text(hint , color = Color.Gray) },
+        placeholder = { Text(hint , color = ColorHint) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             containerColor = Color.White,
             focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent
+            unfocusedBorderColor = Color.Transparent,
+            textColor = Color.Black
         )
 
     )
@@ -256,8 +265,9 @@ fun OutLinedEditText(icon: ImageVector, hint: String = "") {
 @Composable
 fun ForgetPasswordText() {
     Text(
-        text = "forget password ?",
-        fontSize = 14.sp,
+        text = "forget password?",
+        fontSize = 12.sp,
+        color = Color.Black,
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),

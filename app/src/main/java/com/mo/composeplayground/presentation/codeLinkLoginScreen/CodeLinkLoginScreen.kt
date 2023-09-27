@@ -1,5 +1,7 @@
 package com.mo.composeplayground.presentation.codeLinkLoginScreen
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -18,10 +20,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -30,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -54,7 +59,9 @@ import com.mo.composeplayground.ui.theme.ColorPrimary
 
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    context: Context? = null
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,11 +72,11 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(20.dp))
         OutLinedEditText(icon = Icons.Outlined.Email , "Email")
         Spacer(modifier = Modifier.height(20.dp))
-        OutLinedEditText(icon = Icons.Outlined.Lock , "Password")
+        OutLinedEditText(icon = Icons.Outlined.Lock , "Password" , true)
         Spacer(modifier = Modifier.height(10.dp))
         ForgetPasswordText()
         Spacer(modifier = Modifier.height(50.dp))
-        LoginButton()
+        LoginButton(context)
         Spacer(modifier = Modifier.height(50.dp))
         SignUpText()
     }
@@ -97,7 +104,7 @@ fun SignUpText() {
 }
 
 @Composable
-fun LoginButton() {
+fun LoginButton(context: Context?) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
@@ -105,13 +112,17 @@ fun LoginButton() {
         ShadowButton(
             background = ColorPrimary,
             radius = 16,
-            onClick = { /*TODO*/ }
+            onClick = {
+                context?.let {
+                    Toast.makeText(context, "Login Clicked", Toast.LENGTH_SHORT).show()
+                }
+            }
         ) {
             Text(
                 text = "Log in",
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 color = Color.Black,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp)
+                modifier = Modifier.padding(horizontal = 30.dp, vertical = 6.dp)
             )
         }
     }
@@ -220,13 +231,14 @@ fun EditText(icon: ImageVector, hint: String = "") {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OutLinedEditText(icon: ImageVector, hint: String = "") {
+fun OutLinedEditText(icon: ImageVector, hint: String = "" , isPassword : Boolean = false) {
 
     val shape = RoundedCornerShape(12.dp)
 
     var txt by remember {
         mutableStateOf(TextFieldValue())
     }
+    var showPassword by remember { mutableStateOf(value = false) }
 
     OutlinedTextField(
         value = txt,
@@ -255,8 +267,32 @@ fun OutLinedEditText(icon: ImageVector, hint: String = "") {
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,
             textColor = Color.Black
-        )
-
+        ),
+        visualTransformation = if (showPassword) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        },
+        trailingIcon = {
+            if (isPassword.not()){
+                null
+            }else if (showPassword) {
+                IconButton(onClick = { showPassword = false }) {
+                    Icon(
+                        imageVector = Icons.Filled.Visibility,
+                        contentDescription = "hide_password"
+                    )
+                }
+            } else {
+                IconButton(
+                    onClick = { showPassword = true }) {
+                    Icon(
+                        imageVector = Icons.Filled.VisibilityOff,
+                        contentDescription = "hide_password"
+                    )
+                }
+            }
+        }
     )
 
 }

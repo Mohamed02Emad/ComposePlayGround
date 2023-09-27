@@ -10,11 +10,7 @@ import com.mo.composeplayground.R
 
 
 val CodeLinkFont = FontFamily(
-    Font(R.font.merriweather_regular)
-)
-
-val CodeLinkTypography = Typography(
-
+    Font(R.font.mulish_regular)
 )
 
 // Set of Material typography styles to start with

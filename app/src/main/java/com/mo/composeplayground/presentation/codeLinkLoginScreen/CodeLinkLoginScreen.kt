@@ -20,22 +20,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,19 +35,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mo.composeplayground.R
+import com.mo.composeplayground.components.BigImage
+import com.mo.composeplayground.components.OutLinedEditText
 import com.mo.composeplayground.components.ShadowButton
-import com.mo.composeplayground.ui.theme.ColorHint
 import com.mo.composeplayground.ui.theme.ColorPrimary
-
-
 
 @Composable
 fun LoginScreen(
@@ -70,9 +58,9 @@ fun LoginScreen(
         BigImage(painterResource(R.drawable.ic_login_image))
         WelcomeText()
         Spacer(modifier = Modifier.height(20.dp))
-        OutLinedEditText(icon = Icons.Outlined.Email , "Email")
+        OutLinedEditText(icon = Icons.Outlined.Email, hint = "Email")
         Spacer(modifier = Modifier.height(20.dp))
-        OutLinedEditText(icon = Icons.Outlined.Lock , "Password" , true)
+        OutLinedEditText(icon = Icons.Outlined.Lock, hint = "Password", isPassword = true)
         Spacer(modifier = Modifier.height(10.dp))
         ForgetPasswordText()
         Spacer(modifier = Modifier.height(50.dp))
@@ -129,44 +117,6 @@ fun LoginButton(context: Context?) {
 }
 
 @Composable
-fun BigImage(image: Painter) {
-    val imageRatio = image.intrinsicSize.width.toFloat() / image.intrinsicSize.height.toFloat()
-
-    Box(
-        modifier = Modifier
-            .padding(top = 10.dp)
-            .padding(horizontal = 70.dp)
-            .wrapContentWidth()
-            .aspectRatio(imageRatio)
-
-    ) {
-
-        Image(
-            painter = image,
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
-fun SmallImage(image: Painter) {
-    val imageRatio = image.intrinsicSize.width.toFloat() / image.intrinsicSize.height.toFloat()
-
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 10.dp, vertical = 10.dp)
-            .wrapContentWidth()
-            .aspectRatio(imageRatio)
-
-    ) {
-        Image(
-            painter = image,
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
 fun WelcomeText() {
     Text(
         text = "Welcome Back!",
@@ -176,125 +126,6 @@ fun WelcomeText() {
             .padding(top = 10.dp)
             .padding(horizontal = 16.dp)
     )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun EditText(icon: ImageVector, hint: String = "") {
-    val shape = RoundedCornerShape(20.dp)
-
-    BasicTextField(
-        value = "",
-        onValueChange = {},
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .height(55.dp)
-            .clip(shape)
-            .shadow(
-                elevation = 2.dp,
-                shape = shape
-            )
-            .padding(all = 2.dp)
-            .clip(shape),
-        visualTransformation = VisualTransformation.None,
-        interactionSource = MutableInteractionSource(),
-        singleLine = true,
-
-        ) { innerTextField ->
-        TextFieldDefaults.TextFieldDecorationBox(
-            value = "",
-            visualTransformation = VisualTransformation.None,
-            innerTextField = innerTextField,
-            singleLine = true,
-            enabled = true,
-            interactionSource = MutableInteractionSource(),
-            contentPadding = PaddingValues(0.dp),
-            leadingIcon = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null
-                )
-            },
-            placeholder = { Text(hint , color = Color.Gray) },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
-        )
-    }
-
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun OutLinedEditText(icon: ImageVector, hint: String = "" , isPassword : Boolean = false) {
-
-    val shape = RoundedCornerShape(12.dp)
-
-    var txt by remember {
-        mutableStateOf(TextFieldValue())
-    }
-    var showPassword by remember { mutableStateOf(value = false) }
-
-    OutlinedTextField(
-        value = txt,
-        onValueChange = {textFieldValue ->
-          txt = textFieldValue
-        },
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .height(55.dp)
-            //  .clip(shape)
-            .shadow(
-                elevation = 2.dp,
-                shape = shape
-            ),
-        leadingIcon = {
-            Icon(
-                icon,
-                contentDescription = null
-            )
-        },
-        shape = shape,
-        placeholder = { Text(hint , color = ColorHint) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            containerColor = Color.White,
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            textColor = Color.Black
-        ),
-        visualTransformation = if (showPassword) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
-        trailingIcon = {
-            if (isPassword.not()){
-                null
-            }else if (showPassword) {
-                IconButton(onClick = { showPassword = false }) {
-                    Icon(
-                        imageVector = Icons.Filled.Visibility,
-                        contentDescription = "hide_password"
-                    )
-                }
-            } else {
-                IconButton(
-                    onClick = { showPassword = true }) {
-                    Icon(
-                        imageVector = Icons.Filled.VisibilityOff,
-                        contentDescription = "hide_password"
-                    )
-                }
-            }
-        }
-    )
-
 }
 
 
@@ -310,8 +141,6 @@ fun ForgetPasswordText() {
         textAlign = TextAlign.End
     )
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
